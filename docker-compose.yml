@@ -1,0 +1,41 @@
+version: '2'
+services:
+  store:
+    # data-only container
+    image: postgres:latest # reuse postgres container
+    volumes:
+      - ./src/postgresql:/var/lib/postgresql/data
+    command: "true"
+  db:
+    image: postgres
+    ports:
+      - 5432:5432
+    volumes_from:
+      - store # connect postgres and the data-only container
+    environment:
+      - POSTGRES_USER=spree
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=spree
+  web:
+    build: .
+    ports:
+      - 33000:3000
+    volumes:
+      - ./src/web:/spree
+
+    volumes_from:
+      - bundle
+    links:
+      - db
+    command: ./bin/start.sh
+    environment:
+      - PORT=3000
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_NAME=spree
+      - DB_USER=root
+      - DB_PSWD=root
+  bundle:
+    image: busybox
+    volumes:
+      - /bundle
