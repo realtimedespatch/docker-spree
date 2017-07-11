@@ -17,5 +17,5 @@ end
 
 Spree.user_class = "Spree::LegacyUser"
 
-Spree::Frontend::Config[:locale] = 'pt-BR'
-Spree::Backend::Config[:locale] = 'pt-BR'
+Spree::Frontend::Config[:locale] = 'en-GB'
+Spree::Backend::Config[:locale] = 'en-GB'
