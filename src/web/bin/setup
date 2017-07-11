@@ -25,6 +25,10 @@ Dir.chdir APP_ROOT do
   system "rm -f log/*"
   system "rm -rf tmp/cache"
 
+system "rails g spree:install --user_class=Spree::User"
+system "rails g spree:auth:install"
+system "rails g spree_gateway:install"
+
   puts "\n== Restarting application server =="
   system "touch tmp/restart.txt"
 end
